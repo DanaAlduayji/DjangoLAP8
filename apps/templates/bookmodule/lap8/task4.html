@@ -1,0 +1,7 @@
+<!-- lab8/task4.html -->
+<h1>Books ordered by title</h1>
+<ul>
+  {% for book in books %}
+    <li>{{ book.title }} - {{ book.author }} - {{ book.price }}</li>
+  {% endfor %}
+</ul>

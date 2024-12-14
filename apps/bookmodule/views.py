@@ -1,9 +1,10 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.db.models import Q, Sum, Avg, Max, Min, Count
 
 from django.http import HttpResponse
-from .models import Book
+from .models import Book, Student, Address
 
 # def index(request):
 #     name = request.GET.get("name") or "world!"
@@ -97,3 +98,39 @@ def lookup_query(request):
         return render(request, 'bookmodule/bookList.html', {'books': mybooks})
     else:
         return render(request, 'bookmodule/index.html')  # Fallback page if no books match
+
+
+def task1(request):
+    books = Book.objects.filter(Q(price__lte=50))
+    return render(request,"bookmodule/lap8/task1.html", {'books': books})
+
+def task2(request):
+    books = Book.objects.filter(edition__gt=2, title__icontains='qu') | Book.objects.filter(edition__gt=2, author__icontains='qu')
+    return render(request, 'bookmodule/lap8/task2.html', {'books': books})
+
+def task3(request):
+    books = Book.objects.filter(
+        Q(edition__lte=2) & ~(Q(title__icontains='qu') | Q(author__icontains='qu'))
+    )
+    return render(request, "bookmodule/lap8/task3.html", {'books': books})
+
+# views.py
+def task4(request):
+    books = Book.objects.all().order_by('title')
+    return render(request, "bookmodule/lap8/task4.html", {'books': books})
+
+
+def task5(request):
+    aggregation = Book.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price'),
+        avg_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price')
+    )
+    return render(request, "bookmodule/lap8/task5.html", {'aggregation': aggregation})
+
+
+def task7(request):
+    city_counts = Address.objects.annotate(num_students=Count('student'))
+    return render(request, "bookmodule/lap8/task7.html", {'city_counts': city_counts})

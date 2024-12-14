@@ -1,0 +1,7 @@
+<!-- lab8/task2.html -->
+<h1>Books with editions > 2 and containing 'qu' in title or author</h1>
+<ul>
+  {% for book in books %}
+    <li>{{ book.title }} - {{ book.author }} - {{ book.edition }}</li>
+  {% endfor %}
+</ul>

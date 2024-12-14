@@ -1,0 +1,7 @@
+<!-- lab8/task7.html -->
+<h1>Number of Students in Each City</h1>
+<ul>
+  {% for address in city_counts %}
+    <li>{{ address.city }}: {{ address.num_students }} students</li>
+  {% endfor %}
+</ul>
