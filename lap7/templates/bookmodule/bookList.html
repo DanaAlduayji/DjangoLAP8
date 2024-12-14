@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+</head>
+<body>
+    <h1>Book List</h1>
+    {% for obj in books %}
+        <p>ID: {{ obj.id }}, Title: {{ obj.title }}</p>
+        <hr>
+    {% endfor %}
+</body>
+</html>
